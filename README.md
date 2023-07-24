@@ -47,3 +47,29 @@ What's Next?
 
 여기서는 명령어를 `docker run 55f`로 넣어주면 되겠군요.
 그럼 `hello`라는 단어가 나타납니다.
+
+# react에서 docker 적용하기
+사용된 프로젝트는 `mystore-front` 입니다.
+
+```
+FROM node:16-alpine
+WORKDIR /desktop
+COPY package.json ./
+RUN npm install
+COPY ./ ./
+CMD ["npm", "run", "start"]
+```
+`dockerfile`에 명령어를 저장한다.
+만약 `dockerfile.dev`같은 이름으로 파일을 생성하면 나중에 터미널에 build 시 파일을 찾지 못하는 경우가 있으니 `dockerfile`로 저장하는 것이 좋다.
+
+이때 `CMD ["npm", "run", "start"]`에서는 실제 웹사이트에 연동될 명령어를 적어주는 것이 좋다.
+만약 `CMD ["npm", "run", "start", "build"]` 이런 식으로 적으면 에러뜬다.
+
+이렇게 `docker run ...`으로 입력하면 위와 같은 명령어일 경우, 웹사이트로 들어가는 경로가 나타나는데, 들어가보면, `사이트에 연결할 수 없음`이라는 문구가 나타난다.
+
+이 경우에는 포트 번호를 지정해서 docker를 연결해주어야 한다.
+
+명령어를 `docker run -p (포트 번호):(포트 번호) (이미지 명)`으로 넣어서 실행하면 웹사이트에 올바르게 연결된다.
+
+>이미지 명의 예 : `sha256:55f9561f3be8260639034a889fffb80178e4e51cf4b8e`
+위에서 기억해야 할 문장이라고 소개해줄 때, 보여준 적이 있다.
