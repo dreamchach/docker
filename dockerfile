@@ -7,4 +7,4 @@ FROM alpine
 
 # 컨테이너 시작 시 실행 될 명령어를 명시해준다
 # CMD ['executable']
-CMD['echo', 'hello']
+CMD ["echo", "hello"]
